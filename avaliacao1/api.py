@@ -78,6 +78,16 @@ class API_Ice_and_Fire(API_consumer):
         return self.__URL
 
     def extract(self, id):
-        # Atividade 5, que resultará o quarto commit
-        pass
+        url = self.URL + str(id)
+        
+        try:
+            response = requests.get(url)
+            if response.raise_for_status():
+                print(f'Erro na requisição {response.status_code}')
+            
+            response = response.json()
+            dados = (response.get('name'), response.get('tvSeries'))
+            return dados
+        except requests.exceptions.HTTPError as e:
+            print(f'Erro na requisição {e}')
  
