@@ -55,8 +55,18 @@ class API_Star_Wars(API_consumer):
         return self.__URL
 
     def extract(self, id):
-    # Atividade 4, que resultará o terceiro commit
-        pass
+        url = self.URL + str(id)
+        
+        try:
+            response = requests.get(url)
+            if response.raise_for_status():
+                print(f'Erro na requisição {response.status_code}')
+            
+            response = response.json()
+            dados = (response.get('name'), response.get('films'))
+            return dados
+        except requests.exceptions.HTTPError as e:
+            print(f'Erro na requisição {e}')
 
 class API_Ice_and_Fire(API_consumer):
     ''' The universe of Ice And Fire '''
